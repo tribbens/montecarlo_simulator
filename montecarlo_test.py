@@ -23,7 +23,7 @@ class MonteCarloTestSuite(unittest.TestCase):
         status = state1 == state2
         message = "Changing weight not working correctly"
         
-        self.assertFalse(state1, state2, message)
+        self.assertFalse(status, message)
         
     def test_3_roll_die(self):
         die1 = Die(np.array([1, 2, 3, 4, 5, 6]))
