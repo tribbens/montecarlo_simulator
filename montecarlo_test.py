@@ -3,7 +3,7 @@ from montecarlo.montecarlo import Die
 from montecarlo.montecarlo import Game
 from montecarlo.montecarlo import Analyzer
 
-class MonteCarloTestSuite(unittest.Testcase):
+class MonteCarloTestSuite(unittest.TestCase):
     
     die1 = Die(np.array([1, 2, 3, 4, 5, 6]))
     game1 = Game([die1, die1, die1])
