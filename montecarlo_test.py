@@ -1,7 +1,7 @@
 import unittest
-from montecarlo import Die
-from montecarlo import Game
-from montecarlo import Analyzer
+from montecarlo.montecarlo import Die
+from montecarlo.montecarlo import Game
+from montecarlo.montecarlo import Analyzer
 
 class MonteCarloTestSuite(unittest.Testcase):
     
