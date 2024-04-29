@@ -18,11 +18,12 @@ class MonteCarloTestSuite(unittest.TestCase):
         die1 = Die(np.array([1, 2, 3, 4, 5, 6]))
         state1 = sum(die1.view_die()[0])
         die1.weight_change(1, 5)
-        
         state2 = sum(die1.view_die()[0])
+
+        status = state1 == state2
         message = "Changing weight not working correctly"
         
-        self.assertEqual(state1, state2, message)
+        self.assertFalse(state1, state2, message)
         
     def test_3_roll_die(self):
         die1 = Die(np.array([1, 2, 3, 4, 5, 6]))
