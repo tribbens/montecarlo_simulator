@@ -26,7 +26,7 @@ class MonteCarloTestSuite(unittest.TestCase):
         
     def test_3_roll_die(self):
         die1 = Die(np.array([1, 2, 3, 4, 5, 6]))
-        status = type(die1.roll_die)
+        status = type(die1.roll_die(10))
         type1 = list
         message = "roll_die method not working correctly"
         
@@ -54,7 +54,7 @@ class MonteCarloTestSuite(unittest.TestCase):
         game1 = Game([die1, die1, die1])
         game1.play_game(100)
         
-        testing = len(game1.recent_results) == 100
+        testing = len(game1.recent_results()) == 100
         message = "play_game not working correctly"
         
         self.assertTrue(testing, message)
@@ -64,7 +64,7 @@ class MonteCarloTestSuite(unittest.TestCase):
         game1 = Game([die1, die1, die1])
         game1.play_game(100)
         
-        testing = type(game1.recent_results) == pd.DataFrame
+        testing = type(game1.recent_results()) == pd.DataFrame
         message = "recent_results not working correctly"
         
         self.assertTrue(testing, message)
