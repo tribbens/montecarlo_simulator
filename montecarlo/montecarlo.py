@@ -6,16 +6,9 @@ from itertools import combinations_with_replacement
 
 class Die():
     '''
-    PURPOSE:  To allow the user to create a Die object with faces as strings or integers
-    and revise the weights according to their needs. The class also allows the user
-    to roll the die and receive the results of the rolls. The user can view the current
-    state of the die at any time.
-    
-    INPUTS:
-    faces  numpy array (of strings or integers)
-    
-    OUTPUTS:
-    None
+    PURPOSE:  To allow the user to create a Die object with N sides or faces and W weights.
+    The weights default to 1.0 and can be customized to fit the user's needs.
+    The only behavior is for it to be rolled one or more times.
     '''
     
     def __init__(self, faces):
@@ -78,7 +71,7 @@ class Die():
         PURPOSE:  Roll the die the specified number of times and return the outcomes as a list.
         
         INPUTS:
-        num_rolls  int (defaults to 1)
+        num_rolls  int, default=1
         
         OUTPUTS:
         roll_outcomes  list (of face values as int or str)
@@ -101,7 +94,7 @@ class Die():
         None
         
         OUTPUTS:
-        _die_status  dataframe
+        _die_status  pandas data frame
         '''
                 
         return self._die_status
@@ -110,6 +103,13 @@ class Die():
 #-----------------------------------------------------------------------------------------------------------------------
 
 class Game():
+    '''
+    PURPOSE:  To allow the user to create a game which consists of rolling one or more
+    similar dice (Die objects) one or more times. Similar dice means that each die
+    has the same number of sides and associated faces, but my have thier own weights.
+    Game objects have a behavior to play a game, which consists of rolling all dice a given
+    number of times. Game objects only keep the results of the most recent play.
+    '''
     
     def __init__(self, current_die):
         '''
@@ -172,10 +172,10 @@ class Game():
         The results can be in a wide data frame or narrow data frame based on value passed to variable "wide".
         
         INPUTS:
-        wide  bool
+        wide  bool, default=True
         
         OUTPUTS:
-        _game_results  data frame
+        _game_results  pandas data frame
         '''
         
         #Raise ValueError if bool isn't passed as value for wide
@@ -226,8 +226,22 @@ class Game():
 
 
 class Analyzer():
-    
+    '''
+    PURPOSE:  An Analyzer object takes the results of a single game (Game object)
+    and computes various descriptive statistical properties about it.
+    '''
+        
     def __init__(self, input_game):
+        '''
+        PURPOSE:  To create an Analyzer object using an input of a Game object.
+        Assigns game input to attribute "game".
+        
+        INPUTS:
+        input_game  Game object
+        
+        OUTPUT:
+        None  assigns variable input_game to game attribute
+        '''
         
         if type(input_game) != Game:
             raise ValueError("Input must be a Game object")
@@ -236,6 +250,15 @@ class Analyzer():
         
     
     def jackpot(self):
+        '''
+        PURPOSE:  To compute the number of times the game resulted in a jackpot.
+        
+        INPUTS:
+        None
+        
+        OUTPUTS:
+        num_jackpots  int
+        '''
         
         #save recent game results as variable
         game_results = self.game.recent_results()
@@ -253,6 +276,16 @@ class Analyzer():
         return num_jackpots
     
     def face_counts_per_roll(self):
+        '''
+        PURPOSE:  Computes the number of times a given face is rolled in each event and
+        returns a data frame of the results.
+        
+        INPUTS:
+        None
+        
+        OUTPUTS:
+        count_df  pandas data frame
+        '''
         
         game_results = self.game.recent_results()
         
@@ -273,7 +306,14 @@ class Analyzer():
     
     def combo_count(self):
         '''
-        docstring
+        PURPOSE:  Computes the distinct combinations of faces rolled and their counts.
+        It returns the results as a data frame.
+        
+        INPUTS:
+        None
+        
+        OUTPUTS:
+        combo_df  pandas data frame
         '''
         
         #save recent game results as variable
@@ -294,11 +334,21 @@ class Analyzer():
             row = str(sorted(list(game_results.loc[i])))
             combo_df.loc[row][0] = combo_df.loc[row][0] + 1
         
+        #remove rows with a count of 0
+        combo_df = combo_df[combo_df['Count'] > 0]
+        
         return combo_df
             
     def permutation_count(self):
         '''
-        docstring
+        PURPOSE:  Computes the distinct permutations of faces rolled and their counts.
+        It returns a data frame of the results.
+        
+        INPUTS:
+        None
+        
+        OUTPUTS:
+        perm_df  pandas data frame
         '''
         
         #save recent game results as variable
@@ -319,4 +369,7 @@ class Analyzer():
             row = str(sorted(list(game_results.loc[i])))
             perm_df.loc[row][0] = perm_df.loc[row][0] + 1
             
+        #remove rows with a count of 0
+        perm_df = perm_df[perm_df['Count'] > 0]
+        
         return perm_df
