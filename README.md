@@ -7,7 +7,7 @@
 ```python
 
 #installation
-pip install montecarlo.montecarlo
+pip install .
 
 # import modules
 from montecarlo.montecarlo import Die
@@ -26,6 +26,12 @@ game1.play_game(1000)
 
 #create Analyzer object
 analyzer1 = Analyzer(game1)
+
+#view counts
+analyzer1.jackpot()
+analyzer1.combo_count()
+analyzer1.permutation_count()
+analyzer1.face_counts_per_roll()
 
 ```
 
