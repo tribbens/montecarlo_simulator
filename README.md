@@ -3,6 +3,8 @@
 
 **Author Name:** Trenton Ribbens
 
+**Description:** This project created a Monte Carlo simulator that can be used in a variety of applications. It was created for DS-5100 as part of my MSDS program.
+
 # Synopsis
 ```python
 
